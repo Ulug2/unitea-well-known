@@ -1,11 +1,14 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
     "target": {
       "namespace": "android_app",
       "package_name": "com.unitea.app",
       "sha256_cert_fingerprints": [
-        "FC:7B:A4:19:AB:27:FE:96:EE:08:C3:91:DF:85:26:E9:8A:BD:BE:7D:A5:AC:C2:CA:73:AF:93:0F:7B:C5:F9:67"
+        "FC:7B:A4:19:AB:27:FE:96:EE:08:C3:91:DF:85:26:E9:8A:BD:BE:7D:A5:AC:C2:CA:73:AF:93:0F:7B:C5:F9:67",
+        "9C:3E:ED:8D:43:0B:50:A1:38:57:06:6E:A6:75:4B:CF:91:AA:FD:92:5E:3E:B6:E0:4B:D3:4F:21:A7:DB:2F:45"
       ]
     }
   }
