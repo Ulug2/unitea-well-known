@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.unitea.app",
+      "sha256_cert_fingerprints": [
+        "FC:7B:A4:19:AB:27:FE:96:EE:08:C3:91:DF:85:26:E9:8A:BD:BE:7D:A5:AC:C2:CA:73:AF:93:0F:7B:C5:F9:67"
+      ]
+    }
+  }
+]
