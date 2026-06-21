@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>UniTee</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/icon.png" />
+	<link rel="apple-touch-icon" href="/assets/icon.png" />
+	<meta name="theme-color" content="#2fc9c1" />
+	<style>
+		:root { color-scheme: dark; }
+		* { box-sizing: border-box; margin: 0; padding: 0; }
+		body {
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: "Inter", system-ui, -apple-system, sans-serif;
+			background: #0f1419;
+			color: #f8f9fb;
+		}
+		.wrap {
+			text-align: center;
+			padding: 40px 24px;
+		}
+		img { width: 64px; height: 64px; border-radius: 18px; margin: 0 auto 20px; display: block; }
+		h1 { font-size: 1.5rem; margin-bottom: 8px; }
+		p  { color: #9ca3af; margin-bottom: 28px; font-size: 0.95rem; }
+		a  {
+			display: inline-flex;
+			align-items: center;
+			padding: 11px 24px;
+			border-radius: 999px;
+			background: #2fc9c1;
+			color: #0b1116;
+			font-weight: 600;
+			text-decoration: none;
+			transition: background 0.2s;
+		}
+		a:hover { background: #28b3ac; }
+	</style>
+	<script>
+		// Redirect post/lostfoundpost deep links (and all other unknown paths)
+		// back to the landing page so users without the app can download it.
+		window.location.replace("/");
+	</script>
+</head>
+<body>
+	<div class="wrap">
+		<img src="/assets/icon.png" alt="UniTee" />
+		<h1>UniTee is a mobile app</h1>
+		<p>Redirecting you to the download page…</p>
+		<a href="/">Go to UniTee</a>
+	</div>
+</body>
+</html>
