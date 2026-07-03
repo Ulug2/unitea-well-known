@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/post/:path*", "destination": "/", "permanent": false },
+    { "source": "/lostfoundpost/:path*", "destination": "/", "permanent": false }
+  ]
+}

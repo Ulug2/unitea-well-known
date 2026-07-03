@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Reset Password – UniTee</title>
+	<meta name="robots" content="noindex" />
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/icon.png" />
+	<meta name="theme-color" content="#2fc9c1" />
+	<style>
+		:root {
+			color-scheme: dark;
+			--bg: #0f1419;
+			--card: #111827;
+			--text: #f8f9fb;
+			--text-sec: #9ca3af;
+			--border: #374151;
+			--primary: #2fc9c1;
+			--primary-dark: #28b3ac;
+			--error: #ef4444;
+			--radius-lg: 24px;
+			--radius-md: 16px;
+			--shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			min-height: 100dvh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 24px;
+			font-family: "Inter", system-ui, -apple-system, sans-serif;
+			background: var(--bg);
+			color: var(--text);
+			line-height: 1.6;
+		}
+
+		a {
+			color: inherit;
+		}
+
+		.card {
+			width: min(420px, 100%);
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: var(--radius-lg);
+			box-shadow: var(--shadow);
+			padding: 32px 28px;
+			text-align: center;
+		}
+
+		.icon {
+			width: 56px;
+			height: 56px;
+			border-radius: 16px;
+			margin: 0 auto 18px;
+			object-fit: cover;
+			border: 1px solid rgba(47, 201, 193, 0.4);
+		}
+
+		h1 {
+			font-size: 1.4rem;
+			margin: 0 0 10px;
+		}
+
+		p {
+			color: var(--text-sec);
+			margin: 0 0 22px;
+			font-size: 0.95rem;
+		}
+
+		.btn {
+			display: inline-flex;
+			width: 100%;
+			align-items: center;
+			justify-content: center;
+			padding: 14px 18px;
+			border-radius: 999px;
+			border: none;
+			font-weight: 600;
+			font-size: 1rem;
+			cursor: pointer;
+			text-decoration: none;
+			background: var(--primary);
+			color: #0b1116;
+			transition: background 0.2s ease, transform 0.2s ease;
+		}
+
+		.btn:hover {
+			background: var(--primary-dark);
+			transform: translateY(-1px);
+		}
+
+		.btn-secondary {
+			background: transparent;
+			color: var(--text-sec);
+			border: 1px solid var(--border);
+			margin-top: 12px;
+		}
+
+		.btn-secondary:hover {
+			color: var(--text);
+			background: rgba(255, 255, 255, 0.03);
+			transform: none;
+		}
+
+		.state {
+			display: none;
+		}
+
+		.state.active {
+			display: block;
+		}
+
+		.spinner {
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			border: 3px solid rgba(15, 17, 22, 0.25);
+			border-top-color: #0b1116;
+			margin: 0 auto;
+			animation: spin 0.8s linear infinite;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		.error-icon {
+			color: var(--error);
+			font-size: 2.4rem;
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="card">
+		<img class="icon" src="/assets/icon.png" alt="UniTee" />
+
+		<!-- Redirecting: shown immediately while we attempt the app deep link -->
+		<div id="state-redirecting" class="state active">
+			<h1>Opening UniTee&hellip;</h1>
+			<p>If the app doesn't open automatically in a few seconds, use the button below.</p>
+			<div class="spinner"></div>
+		</div>
+
+		<!-- Manual fallback: shown after the auto-redirect timeout -->
+		<div id="state-manual" class="state">
+			<h1>Continue in the UniTee App</h1>
+			<p>Tap below to open the app and finish resetting your password. If you don't have UniTee installed yet,
+				download it first, then request a new reset link from the sign-in screen.</p>
+			<a id="open-app-btn" class="btn" href="#">Open UniTee</a>
+			<a class="btn btn-secondary"
+				href="https://apps.apple.com/us/app/unitee-campus-community/id6758392544">Download UniTee</a>
+		</div>
+
+		<!-- Invalid: no token present in the URL at all -->
+		<div id="state-invalid" class="state">
+			<div class="error-icon">&#9888;</div>
+			<h1>Invalid Link</h1>
+			<p>This password reset link is missing required information. Please request a new one from the UniTee
+				sign-in screen.</p>
+		</div>
+	</div>
+
+	<script>
+		(function () {
+			var params = new URLSearchParams(window.location.search);
+			var tokenHash = params.get("token_hash");
+			var code = params.get("code");
+
+			function show(id) {
+				document.querySelectorAll(".state").forEach(function (el) {
+					el.classList.remove("active");
+				});
+				document.getElementById(id).classList.add("active");
+			}
+
+			if (!tokenHash && !code) {
+				show("state-invalid");
+				return;
+			}
+
+			var deepLink = tokenHash
+				? "myunitea://reset-password?token_hash=" + encodeURIComponent(tokenHash) + "&type=recovery"
+				: "myunitea://reset-password?code=" + encodeURIComponent(code);
+
+			document.getElementById("open-app-btn").href = deepLink;
+
+			// Attempt the deep link immediately. If the app is installed, the OS
+			// hands off to it and this page is abandoned. If nothing happens within
+			// ~1.8s (app not installed, or the browser blocked the auto-navigation),
+			// reveal the manual fallback instead of spinning forever.
+			window.location.href = deepLink;
+			setTimeout(function () {
+				show("state-manual");
+			}, 1800);
+		})();
+	</script>
+</body>
+
+</html>
