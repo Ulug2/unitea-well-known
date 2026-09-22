@@ -186,13 +186,27 @@
 			max-width: 520px;
 		}
 
-		.appstore {
-			display: inline-block;
+		.store-buttons {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 12px;
 			padding: 8px 0;
 		}
 
-		.appstore img {
-			width: min(220px, 80vw);
+		.store-buttons a {
+			display: inline-block;
+			line-height: 0;
+		}
+
+		.store-buttons img {
+			height: 40px;
+			width: auto;
+		}
+
+		.store-buttons .google-play img {
+			height: 60px;
+			margin: -10px -12px;
 		}
 
 		.mockup {
@@ -323,8 +337,7 @@
 				<img class="brand-mark" src="assets/icon.png" alt="UniTee" />
 				<h2>UniTee</h2>
 			</div>
-			<a class="btn btn-primary"
-				href="https://apps.apple.com/us/app/unitee-campus-community/id6758392544">Download</a>
+			<a class="btn btn-primary" href="#download">Download</a>
 		</div>
 	</header>
 
@@ -339,9 +352,16 @@
 					<span class="badge">Exclusive to Verified University Students</span>
 					<h1>Your Campus's Anonymous App</h1>
 					<p>Verified. Anonymous. Exclusive. No outsiders. Just students from your university.</p>
-					<a class="appstore" href="https://apps.apple.com/us/app/unitee-campus-community/id6758392544">
-						<img src="assets/app-store-badge.svg" alt="Download on the App Store" />
-					</a>
+					<div class="store-buttons">
+						<a href="https://apps.apple.com/us/app/unitee-campus-community/id6758392544">
+							<img src="assets/app-store-badge.svg" alt="Download on the App Store" />
+						</a>
+						<a class="google-play"
+							href="https://play.google.com/store/apps/details?id=com.unitea.app"
+							target="_blank" rel="noopener noreferrer">
+							<img src="assets/google-play-badge.png" alt="Get it on Google Play" />
+						</a>
+					</div>
 				</div>
 				<div class="mockup">
 					<img src="assets/mockup.PNG" alt="UniTee app preview" />
